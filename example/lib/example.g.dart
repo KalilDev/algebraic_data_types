@@ -85,6 +85,9 @@ class BoardIndex implements ProductType, TupleN2<int, int> {
 
   const BoardIndex(this.e0, this.e1) : super();
 
+  factory BoardIndex.fromTupleN(TupleN2<int, int> tpl) =>
+      BoardIndex(tpl.e0, tpl.e1);
+
   @override
   ProductRuntimeType get runtimeType => ProductRuntimeType([int, int]);
 

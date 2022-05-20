@@ -34,6 +34,11 @@ ${bodyToFields(body)}
       : ${initializerAssertionsFromBody(body)}
         super();
 
+${maybeGenerate(tuple.body.length <= 20, () => '''
+  factory ${name.toCode()}.fromTupleN(${tupleN.toCode()} tpl) =>
+       ${name.toCode()}(${Iterable.generate(tuple.body.length, (i) => 'tpl.e$i').join(', ')});
+  ''')}
+
 ${maybeGenerate(
     annotation.deriveRuntimeType,
     () => '''
