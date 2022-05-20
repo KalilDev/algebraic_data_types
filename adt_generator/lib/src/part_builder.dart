@@ -9,9 +9,13 @@ import 'record.dart';
 import 'reviving.dart';
 import 'tuple.dart';
 
-Builder adtPartBuilder() => SharedPartBuilder([
-      AdtGenerator(),
-    ], 'adt');
+Builder adtPartBuilder() => SharedPartBuilder(
+      [
+        AdtGenerator(),
+      ],
+      'adt',
+      allowSyntaxErrors: true,
+    );
 
 class AdtGenerator extends GeneratorForAnnotation<DataAnnotation> {
   @override

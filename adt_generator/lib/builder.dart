@@ -17,16 +17,14 @@ import 'package:build/build.dart';
 import 'src/part_builder.dart';
 
 /// Supports `package:build_runner` creation and configuration of
-/// `json_serializable`.
+/// `adt`.
 ///
 /// Not meant to be invoked by hand-authored code.
 Builder algebraicDataTypes(BuilderOptions options) {
   try {
     return adtPartBuilder();
   } on Exception catch (e) {
-    final lines = <String>[
-      'Could not parse the options provided for `json_serializable`.'
-    ];
+    final lines = <String>['Could not parse the options provided for `adt`.'];
     /*
     if (e.key != null) {
       lines.add('There is a problem with "${e.key}".');
