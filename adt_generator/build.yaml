@@ -1,0 +1,20 @@
+# Read about `build.yaml` at https://pub.dev/packages/build_config
+targets:
+  $default:
+    builders:
+      source_gen|combining_builder:
+        options:
+          ignore_for_file:
+          - lines_longer_than_80_chars
+          # Only for the JSON literal output file
+          - text_direction_code_point_in_literal
+
+builders:
+  adt:
+    import: "package:adt_generator/builder.dart"
+    builder_factories: ["algebraicDataTypes"]
+    build_extensions: {".dart": ["adt.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+
