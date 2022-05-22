@@ -54,13 +54,13 @@ class Nil<t extends Object?> extends Tree<t> {
 class RecordEx<Message extends Object?> implements ProductType {
   final Message message;
   final Message other_message;
-  final int number;
+  final intns.Int number;
 
   const RecordEx(this.message, this.other_message, this.number) : super();
 
   @override
   ProductRuntimeType get runtimeType =>
-      ProductRuntimeType([Message, Message, int]);
+      ProductRuntimeType([Message, Message, intns.Int]);
 
   @override
   int get hashCode =>
@@ -79,17 +79,18 @@ class RecordEx<Message extends Object?> implements ProductType {
       "RecordEx<$Message> { $message, $other_message, $number }";
 }
 
-class BoardIndex implements ProductType, TupleN2<int, int> {
-  final int e0;
-  final int e1;
+class BoardIndex implements ProductType, TupleN2<intns.Int, intns.Int> {
+  final intns.Int e0;
+  final intns.Int e1;
 
   const BoardIndex(this.e0, this.e1) : super();
 
-  factory BoardIndex.fromTupleN(TupleN2<int, int> tpl) =>
+  factory BoardIndex.fromTupleN(TupleN2<intns.Int, intns.Int> tpl) =>
       BoardIndex(tpl.e0, tpl.e1);
 
   @override
-  ProductRuntimeType get runtimeType => ProductRuntimeType([int, int]);
+  ProductRuntimeType get runtimeType =>
+      ProductRuntimeType([intns.Int, intns.Int]);
 
   @override
   int get hashCode => Object.hash((BoardIndex), e0, e1);
@@ -106,16 +107,16 @@ class BoardIndex implements ProductType, TupleN2<int, int> {
 }
 
 class $Foo$ implements ProductType {
-  final int bar;
-  final int baz$;
-  final int $qux$;
+  final intns.Int bar;
+  final intns.Int baz$;
+  final intns.Int $qux$;
   final $Foo$ $quox$;
 
   const $Foo$(this.bar, this.baz$, this.$qux$, this.$quox$) : super();
 
   @override
   ProductRuntimeType get runtimeType =>
-      ProductRuntimeType([int, int, int, $Foo$]);
+      ProductRuntimeType([intns.Int, intns.Int, intns.Int, $Foo$]);
 
   @override
   int get hashCode => Object.hash(($Foo$), bar, baz$, $qux$, $quox$);

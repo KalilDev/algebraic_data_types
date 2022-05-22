@@ -1,4 +1,5 @@
 import 'package:adt_annotation/adt_annotation.dart';
+import 'int.dart' as intns;
 
 /// example.dart
 part 'example.g.dart';
@@ -9,9 +10,9 @@ part 'example.g.dart';
   Union(
     {
       #Node: {
-        #value: T(#t, [], ['{} != null']),
-        #left: T(#Tree, [T(#t)]),
-        #right: T(#Tree, [T(#t)]),
+        #value: T(#t, asserts: ['{} != null']),
+        #left: T(#Tree, args: [T(#t)]),
+        #right: T(#Tree, args: [T(#t)]),
       },
       #Nil: {},
     },
@@ -29,7 +30,7 @@ const Type _tree = Tree;
   Record({
     #message: T(#Message),
     #other_message: T(#Message),
-    #number: T(#int),
+    #number: T(#Int, namespace: #intns),
   }),
 )
 const Type _recordEx = RecordEx;
@@ -37,7 +38,7 @@ const Type _recordEx = RecordEx;
 @data(
   #BoardIndex,
   [],
-  Tuple([T(#int), T(#int)]),
+  Tuple([T(#Int, namespace: #intns), T(#Int, namespace: #intns)]),
 )
 const Type _boardIndex = BoardIndex;
 
@@ -45,9 +46,9 @@ const Type _boardIndex = BoardIndex;
   #$Foo$,
   [],
   Record({
-    #bar: T(#int),
-    #baz$: T(#int),
-    #$qux$: T(#int),
+    #bar: T(#Int, namespace: #intns),
+    #baz$: T(#Int, namespace: #intns),
+    #$qux$: T(#Int, namespace: #intns),
     #$quox$: T(#$Foo$),
   }),
 )
