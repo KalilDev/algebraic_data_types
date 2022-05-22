@@ -104,3 +104,31 @@ class BoardIndex implements ProductType, TupleN2<int, int> {
   @override
   String toString() => "BoardIndex ($e0, $e1)";
 }
+
+class $Foo$ implements ProductType {
+  final int bar;
+  final int baz$;
+  final int $qux$;
+  final $Foo$ $quox$;
+
+  const $Foo$(this.bar, this.baz$, this.$qux$, this.$quox$) : super();
+
+  @override
+  ProductRuntimeType get runtimeType =>
+      ProductRuntimeType([int, int, int, $Foo$]);
+
+  @override
+  int get hashCode => Object.hash(($Foo$), bar, baz$, $qux$, $quox$);
+  @override
+  bool operator ==(other) =>
+      identical(this, other) ||
+      (other is $Foo$ &&
+          true &&
+          this.bar == other.bar &&
+          this.baz$ == other.baz$ &&
+          this.$qux$ == other.$qux$ &&
+          this.$quox$ == other.$quox$);
+
+  @override
+  String toString() => "\$Foo\$ { $bar, ${baz$}, ${$qux$}, ${$quox$} }";
+}

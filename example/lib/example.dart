@@ -40,3 +40,15 @@ const Type _recordEx = RecordEx;
   Tuple([T(#int), T(#int)]),
 )
 const Type _boardIndex = BoardIndex;
+
+@data(
+  #$Foo$,
+  [],
+  Record({
+    #bar: T(#int),
+    #baz$: T(#int),
+    #$qux$: T(#int),
+    #$quox$: T(#$Foo$),
+  }),
+)
+const Type _$foo$ = $Foo$;
