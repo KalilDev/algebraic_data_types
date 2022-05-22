@@ -1,6 +1,6 @@
 name: adt_generator
 description: A simple command-line application.
-version: 1.2.3
+version: 2.0.0
 # homepage: https://www.example.com
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 
 dependencies:
-  adt_annotation: ^1.2.0
+  adt_annotation: ^2.0.2
   source_gen: ^1.2.0
   build: ^2.3.0
   build_config: ^1.0.0

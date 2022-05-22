@@ -16,8 +16,10 @@ extension aaaaa on DataAnnotation {
   String typeParamsToCode() => typeParams.toCode();
   String parameterizedTypeToCode() => name.toCode() + typeParamsToCode();
   String instantiationToCode() => instantiationToType().toCode();
-  TypeD instantiationToType() =>
-      TypeD(name, typeParams.toInstantiation().toList());
+  TypeD instantiationToType() => TypeD(
+        name,
+        args: typeParams.toInstantiation().toList(),
+      );
 }
 
 extension aaaa on Symbol {
@@ -26,6 +28,7 @@ extension aaaa on Symbol {
 
 extension aaa on TypeD {
   String toCode() =>
+      (namespace == null ? '' : '${namespace!.toCode()}.') +
       name.toCode() +
       emptyOrSurrounded(arguments.map((e) => e.toCode())) +
       (nullable ? '?' : '');

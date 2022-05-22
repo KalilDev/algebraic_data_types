@@ -20,10 +20,23 @@ TypeD typeDFromReader(ConstantReader reader) {
         (e) => e.toStringValue()!,
       )
       .toList();
+  final namespace = reader.read('namespace').isNull
+      ? null
+      : reader.read('namespace').symbolValue;
   if (reader.read('nullable').boolValue) {
-    return TypeD.n(name, arguments, assertions);
+    return TypeD.n(
+      name,
+      args: arguments,
+      asserts: assertions,
+      namespace: namespace,
+    );
   }
-  return TypeD(name, arguments, assertions);
+  return TypeD(
+    name,
+    args: arguments,
+    asserts: assertions,
+    namespace: namespace,
+  );
 }
 
 Union unionFromReader(ConstantReader reader) {

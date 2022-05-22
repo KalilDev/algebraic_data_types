@@ -22,7 +22,10 @@ String generateForTuple(
   final productTypes = tuple.body.map((e) => e.toCode());
   final tupleN = tuple.body.length > 20
       ? T(#TupleN)
-      : T(Symbol("TupleN${tuple.body.length}"), tuple.body);
+      : T(
+          Symbol("TupleN${tuple.body.length}"),
+          args: tuple.body,
+        );
 
   return '''
 class ${annotation.parameterizedTypeToCode()}

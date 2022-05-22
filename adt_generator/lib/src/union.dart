@@ -179,7 +179,10 @@ extension on _UnionData {
       this.union.body.entries.map((e) => _CaseData(
             annotation.typeParamsToCode(),
             annotation.instantiationToCode(),
-            TypeD(e.key, annotation.typeParams.toInstantiation().toList()),
+            TypeD(
+              e.key,
+              args: annotation.typeParams.toInstantiation().toList(),
+            ),
             stringLowercasedWithoutUnderlines(e.key.toCode()),
             e.value,
           ));
