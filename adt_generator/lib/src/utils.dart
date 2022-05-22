@@ -152,12 +152,18 @@ String functionTypeToCode(TypeD returnType, Map<Symbol, TypeD> arguments,
     '('
     '${arguments.entries.map(argumentFromEntryToCode).join(', ')}'
     ')';
-String _typeDToOutputString(TypeD type) => '${type.name.toCode()}'
-    '${emptyOrSurrounded(type.arguments.map((e) => '\$${e.toCode()}'))}';
+bool _stringContains$(String s) => s.contains('\$');
+String _escapedStringWith$(String s) => s.replaceAll(r'$', r'\$');
+String _stringWithLeading$OrWrapped(String s) =>
+    _stringContains$(s) ? '\${$s}' : '\$$s';
+String _typeDToOutputString(TypeD type) =>
+    '${_escapedStringWith$(type.name.toCode())}'
+    '${emptyOrSurrounded(type.arguments.map((e) => _stringWithLeading$OrWrapped(e.toCode())))}';
 String toStringFromTypeAndBody(String typePart, String bodyPart) =>
     '@override\n'
     'String toString() =>\n'
     ' "${bodyPart.isEmpty ? typePart : '$typePart $bodyPart'}"\n;';
+
 String toStringFromTypeDAndBody(TypeD type, String bodyPart) =>
     toStringFromTypeAndBody(_typeDToOutputString(type), bodyPart);
 
@@ -170,7 +176,7 @@ String toStringBodyFrom(
     elements.isEmpty
         ? (outputOnEmpty ? '$delimiterL$delimiterR' : '')
         : '$delimiterL'
-            '${elements.map((e) => '\$${e.toCode()}').join(', ')}'
+            '${elements.map((e) => _stringWithLeading$OrWrapped(e.toCode())).join(', ')}'
             '$delimiterR';
 
 String mixinToCode(List<TypeD> mixins) =>
