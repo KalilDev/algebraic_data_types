@@ -30,27 +30,31 @@ export 'package:utils/utils.dart'
 typedef T = TypeD;
 typedef Tp = TypeParam;
 
-// class B {
-// }
-//
-// class a<T extends B> {
-// }
-// class SelfObject<T extends SelfObject<T>> {
-// }
-
 // data TypeD = {name :: Symbol, arguments :: List<TypeD>, nullable :: bool}
 class TypeD {
   final Symbol name;
   final List<TypeD> arguments;
   final List<String> assertions;
+  final Symbol? namespace;
   final bool nullable;
 
-  const TypeD(this.name,
-      [this.arguments = const [], this.assertions = const []])
-      : nullable = false;
-  const TypeD.n(this.name,
-      [this.arguments = const [], this.assertions = const []])
-      : nullable = true;
+  const TypeD(
+    this.name, {
+    List<TypeD> args = const [],
+    List<String> asserts = const [],
+    this.namespace,
+  })  : nullable = false,
+        arguments = args,
+        assertions = asserts;
+
+  const TypeD.n(
+    this.name, {
+    List<TypeD> args = const [],
+    List<String> asserts = const [],
+    this.namespace,
+  })  : nullable = true,
+        arguments = args,
+        assertions = asserts;
   static const object = TypeD(#Object);
   static const objectN = TypeD.n(#Object);
 }
