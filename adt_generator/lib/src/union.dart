@@ -85,7 +85,10 @@ ${visitCName != '' && union.topLevel ? topLevelVisitC(unionData) : ''}
 
 abstract class ${annotation.parameterizedTypeToCode()}
           ${mixinToCode(annotation.mixin)}
-          implements SumType {
+          ${maybeGenerate(
+    annotation.deriveRuntimeType,
+    () => '''implements SumType''',
+  )} {
   const ${name.toCode()}._();
 ${caseFactories.join('\n')}
 

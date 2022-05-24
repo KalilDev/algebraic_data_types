@@ -30,7 +30,10 @@ String generateForTuple(
   return '''
 class ${annotation.parameterizedTypeToCode()}
           ${mixinToCode(annotation.mixin)}
-          implements ProductType, ${tupleN.toCode()} {
+          implements ${maybeGenerate(
+    annotation.deriveRuntimeType,
+    () => 'ProductType, ',
+  )}${tupleN.toCode()} {
 ${bodyToFields(body)}
 
   const ${name.toCode()}(${initializerArgsFromSymbols(body.keys)})

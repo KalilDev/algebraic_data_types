@@ -15,7 +15,10 @@ String generateForRecord(
   return '''
 class ${annotation.parameterizedTypeToCode()}
           ${mixinToCode(annotation.mixin)}
-          implements ProductType {
+          ${maybeGenerate(
+    annotation.deriveRuntimeType,
+    () => '''implements ProductType''',
+  )} {
 ${bodyToFields(record.body)}
 
   const ${name.toCode()}(${initializerArgsFromSymbols(record.body.keys)})
