@@ -56,3 +56,16 @@ const Type _boardIndex = BoardIndex;
   deriveRuntimeType: false,
 )
 const Type _$foo$ = $Foo$;
+
+@data(
+  #IntList,
+  [],
+  Opaque(
+    T(#List, args: [T(#Int, namespace: #intns)]),
+    exposeConstructor: true,
+  ),
+)
+const Type _intList = IntList;
+
+IntList emptyIntList(int length) => IntList(List.filled(0, length));
+intns.Int intListAt(IntList list, int i) => list._unwrap[i];

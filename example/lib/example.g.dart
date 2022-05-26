@@ -122,3 +122,22 @@ class $Foo$ {
   @override
   String toString() => "\$Foo\$ { $bar, ${baz$}, ${$qux$}, ${$quox$} }";
 }
+
+class IntList implements ProductType {
+  final List<intns.Int> _unwrap;
+
+  const IntList(this._unwrap);
+
+  @override
+  ProductRuntimeType get runtimeType => ProductRuntimeType([IntList]);
+
+  @override
+  int get hashCode => Object.hash((IntList), _unwrap);
+  @override
+  bool operator ==(other) =>
+      identical(this, other) ||
+      (other is IntList && true && this._unwrap == other._unwrap);
+
+  @override
+  String toString() => "IntList { $_unwrap }";
+}

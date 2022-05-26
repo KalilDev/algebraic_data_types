@@ -14,14 +14,14 @@ packages:
       name: adt_annotation
       url: "http://localhost:4000"
     source: hosted
-    version: "2.0.2"
+    version: "3.0.1"
   adt_generator:
     dependency: "direct dev"
     description:
       path: "../adt_generator"
       relative: true
     source: path
-    version: "2.0.0"
+    version: "3.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -371,7 +371,7 @@ packages:
       name: utils
       url: "http://localhost:4000"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   watcher:
     dependency: transitive
     description:
