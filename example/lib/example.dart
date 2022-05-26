@@ -21,6 +21,7 @@ part 'example.g.dart';
   ),
   deriveEquality: false,
   deriveToString: false,
+  deriveRuntimeType: false,
 )
 const Type _tree = Tree;
 
@@ -39,6 +40,7 @@ const Type _recordEx = RecordEx;
   #BoardIndex,
   [],
   Tuple([T(#Int, namespace: #intns), T(#Int, namespace: #intns)]),
+  deriveRuntimeType: false,
 )
 const Type _boardIndex = BoardIndex;
 
@@ -51,5 +53,6 @@ const Type _boardIndex = BoardIndex;
     #$qux$: T(#Int, namespace: #intns),
     #$quox$: T(#$Foo$),
   }),
+  deriveRuntimeType: false,
 )
 const Type _$foo$ = $Foo$;

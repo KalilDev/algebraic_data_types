@@ -12,13 +12,10 @@ R visitTree<R extends Object?, t extends Object?>(
         R Function() nil) =>
     union.visit(node: node, nil: nil);
 
-abstract class Tree<t extends Object?> implements SumType {
+abstract class Tree<t extends Object?> {
   const Tree._();
   const factory Tree.node(t value, Tree<t> left, Tree<t> right) = Node;
   const factory Tree.nil() = Nil;
-
-  @override
-  SumRuntimeType get runtimeType => SumRuntimeType([Node<t>, Nil<t>]);
 
   R visit<R extends Object?>(
       {required R Function(t value, Tree<t> left, Tree<t> right) node,
@@ -79,7 +76,7 @@ class RecordEx<Message extends Object?> implements ProductType {
       "RecordEx<$Message> { $message, $other_message, $number }";
 }
 
-class BoardIndex implements ProductType, TupleN2<intns.Int, intns.Int> {
+class BoardIndex implements TupleN2<intns.Int, intns.Int> {
   final intns.Int e0;
   final intns.Int e1;
 
@@ -87,10 +84,6 @@ class BoardIndex implements ProductType, TupleN2<intns.Int, intns.Int> {
 
   factory BoardIndex.fromTupleN(TupleN2<intns.Int, intns.Int> tpl) =>
       BoardIndex(tpl.e0, tpl.e1);
-
-  @override
-  ProductRuntimeType get runtimeType =>
-      ProductRuntimeType([intns.Int, intns.Int]);
 
   @override
   int get hashCode => Object.hash((BoardIndex), e0, e1);
@@ -106,17 +99,13 @@ class BoardIndex implements ProductType, TupleN2<intns.Int, intns.Int> {
   String toString() => "BoardIndex ($e0, $e1)";
 }
 
-class $Foo$ implements ProductType {
+class $Foo$ {
   final intns.Int bar;
   final intns.Int baz$;
   final intns.Int $qux$;
   final $Foo$ $quox$;
 
   const $Foo$(this.bar, this.baz$, this.$qux$, this.$quox$) : super();
-
-  @override
-  ProductRuntimeType get runtimeType =>
-      ProductRuntimeType([intns.Int, intns.Int, intns.Int, $Foo$]);
 
   @override
   int get hashCode => Object.hash(($Foo$), bar, baz$, $qux$, $quox$);
