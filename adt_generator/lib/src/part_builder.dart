@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:adt_annotation/adt_annotation.dart';
+import 'opaque.dart';
 import 'union.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
@@ -48,6 +49,10 @@ class AdtGenerator extends GeneratorForAnnotation<DataAnnotation> {
     if (annotation.body is Record) {
       return generateForRecord(element, annotation, buildStep);
     }
-    throw TypeError();
+    if (annotation.body is Opaque) {
+      return generateForOpaque(element, annotation, buildStep);
+    }
+    throw UnimplementedError(
+        'The case ${annotation.body.runtimeType} was not implemented');
   }
 }

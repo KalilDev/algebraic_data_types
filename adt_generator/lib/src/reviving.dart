@@ -4,6 +4,7 @@ import 'package:source_gen/source_gen.dart';
 TypeChecker unionTypeChecker = TypeChecker.fromRuntime(Union);
 TypeChecker tupleTypeChecker = TypeChecker.fromRuntime(Tuple);
 TypeChecker recordTypeChecker = TypeChecker.fromRuntime(Record);
+TypeChecker opaqueTypeChecker = TypeChecker.fromRuntime(Opaque);
 
 TypeD typeDFromReader(ConstantReader reader) {
   final name = reader.read('name').symbolValue;
@@ -62,7 +63,13 @@ Tuple tupleFromReader(ConstantReader reader) {
         .map(ConstantReader.new)
         .map(typeDFromReader)
         .toList(),
-    deriveVisit: reader.read('deriveVisit').boolValue,
+  );
+}
+
+Opaque opaqueFromReader(ConstantReader reader) {
+  return Opaque(
+    typeDFromReader(reader.read('type')),
+    exposeConstructor: reader.read('exposeConstructor').boolValue,
   );
 }
 
@@ -72,6 +79,8 @@ Record recordFromReader(ConstantReader reader) {
           ConstantReader(name).symbolValue,
           typeDFromReader(ConstantReader(type)),
         )),
+    deriveMode: RecordConstructorDeriveMode
+        .values[reader.read('deriveMode').read('index').intValue],
   );
 }
 
@@ -84,6 +93,9 @@ DataExpr dataExprFromReader(ConstantReader reader) {
   }
   if (reader.instanceOf(recordTypeChecker)) {
     return recordFromReader(reader);
+  }
+  if (reader.instanceOf(opaqueTypeChecker)) {
+    return opaqueFromReader(reader);
   }
   throw TypeError();
 }

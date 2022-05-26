@@ -3,16 +3,18 @@ import 'package:adt_annotation/adt_annotation.dart';
 import 'utils.dart';
 import 'package:analyzer/dart/element/element.dart';
 
-String generateForRecord(
+String generateForOpaque(
   Element element,
   DataAnnotation annotation,
   BuildStep buildStep,
 ) {
-  final record = annotation.body as Record;
+  final opaque = annotation.body as Opaque;
   final name = annotation.name;
-  final productTypes = record.body.values.map((e) => e.toCode());
+  // Opaque types are an product of only themselves.
+  final productTypes = [annotation.instantiationToCode()];
 
-  // TODO: record.deriveMode
+  final constructorName = opaque.exposeConstructor ? '' : '._';
+  final body = {#_unwrap: opaque.type};
 
   return '''
 class ${annotation.parameterizedTypeToCode()}
@@ -21,11 +23,9 @@ class ${annotation.parameterizedTypeToCode()}
     annotation.deriveRuntimeType,
     () => '''implements ProductType''',
   )} {
-${bodyToFields(record.body)}
+${bodyToFields(body)}
 
-  const ${name.toCode()}(${initializerArgsFromSymbols(record.body.keys)})
-      : ${initializerAssertionsFromBody(record.body)}
-        super();
+  const ${name.toCode()}$constructorName(${initializerArgsFromSymbols(body.keys)});
 
 ${maybeGenerate(
     annotation.deriveRuntimeType,
@@ -41,18 +41,18 @@ ${maybeGenerate(
   @override
   int get hashCode => ${hashExpressionFromTypeAndBody(
       annotation.instantiationToType(),
-      record.body.keys,
+      body.keys,
     )};
   @override
   bool operator ==(other) =>
-        ${equalityExpressionFor(annotation.instantiationToCode(), record.body.keys)};
+        ${equalityExpressionFor(annotation.instantiationToCode(), body.keys)};
   ''',
   )}
   ${maybeGenerate(
     annotation.deriveToString,
     () => toStringFromTypeDAndBody(
       annotation.instantiationToType(),
-      toStringRecordBodyFrom(record.body.keys),
+      toStringRecordBodyFrom(body.keys),
     ),
   )}
 }

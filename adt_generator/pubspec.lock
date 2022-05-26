@@ -14,7 +14,7 @@ packages:
       name: adt_annotation
       url: "http://localhost:4000"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.1"
   analyzer:
     dependency: "direct main"
     description:
@@ -196,7 +196,7 @@ packages:
       name: utils
       url: "http://localhost:4000"
     source: hosted
-    version: "2.1.0"
+    version: "3.0.1"
   watcher:
     dependency: transitive
     description:
