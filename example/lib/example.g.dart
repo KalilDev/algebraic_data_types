@@ -76,6 +76,25 @@ class RecordEx<Message extends Object?> implements ProductType {
       "RecordEx<$Message> { $message, $other_message, $number }";
 }
 
+class NullableEx implements ProductType {
+  final String? nullable;
+
+  const NullableEx(this.nullable) : super();
+
+  @override
+  ProductRuntimeType get runtimeType => ProductRuntimeType([Nullable<String>]);
+
+  @override
+  int get hashCode => Object.hash((NullableEx), nullable);
+  @override
+  bool operator ==(other) =>
+      identical(this, other) ||
+      (other is NullableEx && true && this.nullable == other.nullable);
+
+  @override
+  String toString() => "NullableEx { $nullable }";
+}
+
 class BoardIndex implements TupleN2<intns.Int, intns.Int> {
   final intns.Int e0;
   final intns.Int e1;

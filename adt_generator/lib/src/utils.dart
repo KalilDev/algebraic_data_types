@@ -32,6 +32,9 @@ extension aaa on TypeD {
       name.toCode() +
       emptyOrSurrounded(arguments.map((e) => e.toCode())) +
       (nullable ? '?' : '');
+  String toTypeLiteralCode() => nullable
+      ? 'Nullable<${T(name, args: arguments, asserts: assertions, namespace: namespace).toCode()}>'
+      : toCode();
 }
 
 String bodyToFields(Map<Symbol, TypeD> body) => body.entries
@@ -56,7 +59,7 @@ Iterable<String> hashablePartsFrom(
         TypeD instantiatedType, Iterable<Symbol> body) =>
     [
       '(${instantiatedType.name.toCode()})',
-      ...instantiatedType.arguments.map((e) => e.toCode()),
+      ...instantiatedType.arguments.map((e) => e.toTypeLiteralCode()),
       ...body.map((e) => e.toCode()),
     ];
 

@@ -37,6 +37,17 @@ const Type _tree = Tree;
 const Type _recordEx = RecordEx;
 
 @data(
+  #NullableEx,
+  [],
+  Record(
+    {
+      #nullable: T.n(#String),
+    },
+  ),
+)
+const Type _NullableEx = NullableEx;
+
+@data(
   #BoardIndex,
   [],
   Tuple([T(#Int, namespace: #intns), T(#Int, namespace: #intns)]),

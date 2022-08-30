@@ -10,7 +10,7 @@ String generateForRecord(
 ) {
   final record = annotation.body as Record;
   final name = annotation.name;
-  final productTypes = record.body.values.map((e) => e.toCode());
+  final productTypes = record.body.values.map((e) => e.toTypeLiteralCode());
 
   // TODO: record.deriveMode
 

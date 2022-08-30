@@ -19,7 +19,7 @@ String generateForTuple(
   final tuple = annotation.body as Tuple;
   final name = annotation.name;
   final body = Map.fromEntries(mapBodyEntriesFromTuple(tuple));
-  final productTypes = tuple.body.map((e) => e.toCode());
+  final productTypes = tuple.body.map((e) => e.toTypeLiteralCode());
   final tupleN = tuple.body.length > 20
       ? T(#TupleN)
       : T(
