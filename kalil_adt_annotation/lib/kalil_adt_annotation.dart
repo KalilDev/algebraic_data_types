@@ -1,4 +1,4 @@
-export 'package:utils/utils.dart'
+export 'package:kalil_utils/utils.dart'
     show
         SumType,
         ProductType,

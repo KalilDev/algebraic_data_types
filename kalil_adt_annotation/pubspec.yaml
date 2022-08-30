@@ -1,5 +1,6 @@
-name: adt_annotations
+name: kalil_adt_annotation
 description: An algebraic data type library (annotations)
+homepage: https://github.com/kalildev/algebraic_data_types
 version: 3.0.3
 
 environment:
@@ -7,8 +8,8 @@ environment:
 
 
 dependencies:
-  utils: ^3.0.4
-  adt_annotation_base: 3.0.2
+  kalil_utils: ^3.0.4
+  adt_annotation_base: ^3.0.2
 
 dev_dependencies:
   lints: ^1.0.0

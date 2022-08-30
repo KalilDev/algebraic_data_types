@@ -5,36 +5,36 @@ packages:
     dependency: "direct main"
     description:
       name: adt_annotation_base
-      url: "http://localhost:4000"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
   collection:
     dependency: transitive
     description:
       name: collection
-      url: "http://localhost:4000"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
+  kalil_utils:
+    dependency: "direct main"
+    description:
+      name: kalil_utils
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.4"
   lints:
     dependency: "direct dev"
     description:
       name: lints
-      url: "http://localhost:4000"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
   meta:
     dependency: transitive
     description:
       name: meta
-      url: "http://localhost:4000"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  utils:
-    dependency: "direct main"
-    description:
-      name: utils
-      url: "http://localhost:4000"
-    source: hosted
-    version: "3.0.4"
 sdks:
   dart: ">=2.16.0 <3.0.0"

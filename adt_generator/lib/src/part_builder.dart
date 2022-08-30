@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:adt_annotations/adt_annotations.dart';
+import 'package:adt_annotation_base/adt_annotation_base.dart';
 import 'opaque.dart';
 import 'union.dart';
 import 'package:source_gen/source_gen.dart';

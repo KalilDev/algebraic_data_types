@@ -1,4 +1,4 @@
-import 'package:adt_annotations/adt_annotations.dart';
+import 'package:adt_annotation_base/adt_annotation_base.dart';
 
 String stringLowercasedWithoutUnderlines(String s) => s.startsWith('_')
     ? stringLowercasedWithoutUnderlines(s.substring(1))

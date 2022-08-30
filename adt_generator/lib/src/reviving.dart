@@ -1,4 +1,4 @@
-import 'package:adt_annotations/adt_annotations.dart';
+import 'package:adt_annotation_base/adt_annotation_base.dart';
 import 'package:source_gen/source_gen.dart';
 
 TypeChecker unionTypeChecker = TypeChecker.fromRuntime(Union);

@@ -8,15 +8,8 @@ packages:
       url: "http://localhost:4000"
     source: hosted
     version: "46.0.0"
-  adt_annotation:
-    dependency: "direct main"
-    description:
-      name: adt_annotation
-      url: "http://localhost:4000"
-    source: hosted
-    version: "3.0.3"
   adt_annotation_base:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: adt_annotation_base
       url: "http://localhost:4000"
@@ -197,13 +190,6 @@ packages:
       url: "http://localhost:4000"
     source: hosted
     version: "1.3.1"
-  utils:
-    dependency: transitive
-    description:
-      name: utils
-      url: "http://localhost:4000"
-    source: hosted
-    version: "3.0.4"
   watcher:
     dependency: transitive
     description:
