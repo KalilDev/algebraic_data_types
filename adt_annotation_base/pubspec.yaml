@@ -1,5 +1,5 @@
 name: adt_annotation_base
-description: A starting point for Dart libraries or applications.
+description: DO NOT USE. Base for adt_annotations
 version: 3.0.2
 
 environment:
