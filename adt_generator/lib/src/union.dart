@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:build/build.dart';
-import 'package:adt_annotation/adt_annotation.dart';
+import 'package:adt_annotations/adt_annotations.dart';
 import 'utils.dart';
 import 'package:analyzer/dart/element/element.dart';
 

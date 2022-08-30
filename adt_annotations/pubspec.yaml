@@ -1,5 +1,5 @@
-name: adt_annotation
-description: A simple command-line application.
+name: adt_annotations
+description: An algebraic data type library (annotations)
 version: 3.0.3
 
 environment:
