@@ -31,6 +31,18 @@ class Node<t extends Object?> extends Tree<t> {
       : assert(value != null),
         super._();
 
+  const Node.named(
+      {required this.value, required this.left, required this.right})
+      : assert(value != null),
+        super._();
+
+  Node<t> copyWith(
+          {required Maybe<t> value,
+          required Maybe<Tree<t>> left,
+          required Maybe<Tree<t>> right}) =>
+      Node<t>(value.valueOr(this.value), left.valueOr(this.left),
+          right.valueOr(this.right));
+
   @override
   R visit<R extends Object?>(
           {required R Function(t value, Tree<t> left, Tree<t> right) node,
@@ -55,6 +67,12 @@ class RecordEx<Message extends Object?> implements ProductType {
 
   const RecordEx(this.message, this.other_message, this.number) : super();
 
+  const RecordEx.named(
+      {required this.message,
+      required this.other_message,
+      required this.number})
+      : super();
+
   @override
   ProductRuntimeType get runtimeType =>
       ProductRuntimeType([Message, Message, intns.Int]);
@@ -74,12 +92,23 @@ class RecordEx<Message extends Object?> implements ProductType {
   @override
   String toString() =>
       "RecordEx<$Message> { $message, $other_message, $number }";
+
+  RecordEx<Message> copyWith(
+          {required Maybe<Message> message,
+          required Maybe<Message> other_message,
+          required Maybe<intns.Int> number}) =>
+      RecordEx<Message>(
+          message.valueOr(this.message),
+          other_message.valueOr(this.other_message),
+          number.valueOr(this.number));
 }
 
 class NullableEx implements ProductType {
   final String? nullable;
 
   const NullableEx(this.nullable) : super();
+
+  const NullableEx.named({required this.nullable}) : super();
 
   @override
   ProductRuntimeType get runtimeType => ProductRuntimeType([Nullable<String>]);
@@ -93,6 +122,9 @@ class NullableEx implements ProductType {
 
   @override
   String toString() => "NullableEx { $nullable }";
+
+  NullableEx copyWith({required Maybe<String?> nullable}) =>
+      NullableEx(nullable.valueOr(this.nullable));
 }
 
 class BoardIndex implements TupleN2<intns.Int, intns.Int> {
@@ -116,6 +148,10 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
 
   @override
   String toString() => "BoardIndex ($e0, $e1)";
+
+  BoardIndex copyWith(
+          {required Maybe<intns.Int> e0, required Maybe<intns.Int> e1}) =>
+      BoardIndex(e0.valueOr(this.e0), e1.valueOr(this.e1));
 }
 
 class $Foo$ {
@@ -125,6 +161,13 @@ class $Foo$ {
   final $Foo$ $quox$;
 
   const $Foo$(this.bar, this.baz$, this.$qux$, this.$quox$) : super();
+
+  const $Foo$.named(
+      {required this.bar,
+      required this.baz$,
+      required this.$qux$,
+      required this.$quox$})
+      : super();
 
   @override
   int get hashCode => Object.hash(($Foo$), bar, baz$, $qux$, $quox$);
@@ -140,6 +183,14 @@ class $Foo$ {
 
   @override
   String toString() => "\$Foo\$ { $bar, ${baz$}, ${$qux$}, ${$quox$} }";
+
+  $Foo$ copyWith(
+          {required Maybe<intns.Int> bar,
+          required Maybe<intns.Int> baz$,
+          required Maybe<intns.Int> $qux$,
+          required Maybe<$Foo$> $quox$}) =>
+      $Foo$(bar.valueOr(this.bar), baz$.valueOr(this.baz$),
+          $qux$.valueOr(this.$qux$), $quox$.valueOr(this.$quox$));
 }
 
 class IntList implements ProductType {

@@ -67,6 +67,7 @@ class DataAnnotation {
   final bool deriveEquality;
   final bool deriveRuntimeType;
   final bool deriveToString;
+  final bool deriveCopyWith;
 
   const DataAnnotation(
     this.name,
@@ -76,6 +77,7 @@ class DataAnnotation {
     this.deriveEquality = true,
     this.deriveRuntimeType = true,
     this.deriveToString = true,
+    this.deriveCopyWith = true,
   });
 }
 
@@ -107,11 +109,13 @@ class Union extends DataExpr {
   final Map<Symbol, Map<Symbol, TypeD>> body;
   final UnionVisitDeriveMode deriveMode;
   final bool topLevel;
+  final bool deriveNamed;
 
   const Union(
     this.body, {
     this.deriveMode = UnionVisitDeriveMode.auto,
     this.topLevel = false,
+    this.deriveNamed = true,
   }) : super._();
 }
 

@@ -25,6 +25,7 @@ export 'package:kalil_utils/utils.dart'
         TupleN18,
         TupleN19,
         TupleN20,
-        Nullable;
+        Nullable,
+        Maybe;
 
 export 'package:adt_annotation_base/adt_annotation_base.dart';

@@ -70,6 +70,15 @@ ${maybeGenerate(
       toStringTupleBodyFrom(body.keys),
     ),
   )}
+
+  ${maybeGenerate(
+    annotation.deriveCopyWith && body.isNotEmpty,
+    () => copyWithToCode(
+      annotation.instantiationToType(),
+      body,
+      false,
+    ),
+  )}
 }
 ''';
 }

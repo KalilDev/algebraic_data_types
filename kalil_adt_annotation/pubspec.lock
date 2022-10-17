@@ -7,7 +7,7 @@ packages:
       name: adt_annotation_base
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.5"
   collection:
     dependency: transitive
     description:

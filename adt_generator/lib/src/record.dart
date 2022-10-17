@@ -63,6 +63,16 @@ ${maybeGenerate(
       toStringRecordBodyFrom(record.body.keys),
     ),
   )}
+
+  ${maybeGenerate(
+    annotation.deriveCopyWith && record.body.isNotEmpty,
+    () => copyWithToCode(
+      annotation.instantiationToType(),
+      record.body,
+      record.deriveMode == RecordConstructorDeriveMode.namedArguments,
+    ),
+  )}
+
 }
 ''';
 }

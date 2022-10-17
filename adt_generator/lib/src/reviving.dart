@@ -127,6 +127,7 @@ DataAnnotation dataAnnotationFromReader(ConstantReader reader) =>
       deriveEquality: reader.read('deriveEquality').boolValue,
       deriveRuntimeType: reader.read('deriveRuntimeType').boolValue,
       deriveToString: reader.read('deriveToString').boolValue,
+      deriveCopyWith: reader.read('deriveCopyWith').boolValue,
     );
 
 final typeTypeChecker = TypeChecker.fromRuntime(Type);

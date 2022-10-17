@@ -234,6 +234,15 @@ ${bodyToFields(data.body)}
     ),
   )}
 
+  ${maybeGenerate(
+    union.annotation.deriveCopyWith && data.body.isNotEmpty,
+    () => copyWithToCode(
+      data.instantiatedType,
+      data.body,
+      false,
+    ),
+  )}
+
   ${union.visitName != '' ? visitImplementation(union.visitName, union, data) : ''}
 
   ${union.visitCName != '' ? visitCImplementation(union.visitCName, union, data) : ''}

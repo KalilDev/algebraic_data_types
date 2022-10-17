@@ -190,5 +190,22 @@ String toStringBodyFrom(
             '${elements.map((e) => _stringWithLeading$OrWrapped(e.toCode())).join(', ')}'
             '$delimiterR';
 
+String copyWithSignatureToCode(TypeD classType, Map<Symbol, TypeD> elements) =>
+    functionSignatureToCode(
+      classType,
+      "copyWith",
+      {},
+      requiredNamedArguments:
+          elements.map((key, value) => MapEntry(key, T(#Maybe, args: [value]))),
+    );
+
+String copyWithToCode(TypeD classType, Map<Symbol, TypeD> elements,
+        bool positionalArguments) =>
+    """
+  ${copyWithSignatureToCode(classType, elements)} => ${classType.toCode()}(
+    ${elements.keys.map((e) => "${positionalArguments ? "${e.toCode()}: " : ""}${e.toCode()}.valueOr(this.${e.toCode()})").join(", ")}
+  );
+""";
+
 String mixinToCode(List<TypeD> mixins) =>
     mixins.isEmpty ? '' : 'with ${mixins.map((e) => e.toCode()).join(',')}';

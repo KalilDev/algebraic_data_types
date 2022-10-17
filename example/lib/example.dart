@@ -1,4 +1,4 @@
-import 'package:adt_annotation/adt_annotation.dart';
+import 'package:kalil_adt_annotation/kalil_adt_annotation.dart';
 import 'int.dart' as intns;
 
 /// example.dart

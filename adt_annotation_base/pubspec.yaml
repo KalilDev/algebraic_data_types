@@ -1,7 +1,7 @@
 name: adt_annotation_base
 description: DO NOT USE. Base for adt_annotations
 homepage: https://github.com/kalildev/algebraic_data_types
-version: 3.0.2
+version: 3.0.5
 
 environment:
   sdk: '>=2.16.0 <3.0.0'
