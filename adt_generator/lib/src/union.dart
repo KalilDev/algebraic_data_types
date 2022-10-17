@@ -214,6 +214,10 @@ ${bodyToFields(data.body)}
   const $name(${initializerArgsFromSymbols(data.body.keys)})
       : ${initializerAssertionsFromBody(data.body)}
         super._();
+
+  ${maybeGenerate(data.body.isNotEmpty && union.union.deriveNamed, () => """const $name.named({${initializerArgsFromSymbols(data.body.keys, required: true)}})
+      : ${initializerAssertionsFromBody(data.body)}
+        super._();""")}
         
   ${maybeGenerate(union.annotation.deriveEquality, () => '''
   @override

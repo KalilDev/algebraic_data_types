@@ -52,6 +52,7 @@ Union unionFromReader(ConstantReader reader) {
     deriveMode: UnionVisitDeriveMode
         .values[reader.read('deriveMode').read('index').intValue],
     topLevel: reader.read('topLevel').boolValue,
+    deriveNamed: reader.read('deriveNamed').boolValue,
   );
 }
 

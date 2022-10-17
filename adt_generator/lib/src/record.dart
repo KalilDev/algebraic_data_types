@@ -23,9 +23,17 @@ class ${annotation.parameterizedTypeToCode()}
   )} {
 ${bodyToFields(record.body)}
 
-  const ${name.toCode()}(${initializerArgsFromSymbols(record.body.keys)})
+  ${maybeGenerate(record.body.isEmpty || record.deriveMode != RecordConstructorDeriveMode.namedArguments, () => """const ${name.toCode()}(${initializerArgsFromSymbols(record.body.keys)})
       : ${initializerAssertionsFromBody(record.body)}
-        super();
+        super();""")}
+  
+  ${maybeGenerate(record.body.isNotEmpty && record.deriveMode == RecordConstructorDeriveMode.both, () => """const ${name.toCode()}.named({${initializerArgsFromSymbols(record.body.keys, required: true)}})
+      : ${initializerAssertionsFromBody(record.body)}
+        super();""")}
+
+  ${maybeGenerate(record.body.isNotEmpty && record.deriveMode == RecordConstructorDeriveMode.namedArguments, () => """const ${name.toCode()}({${initializerArgsFromSymbols(record.body.keys, required: true)}})
+      : ${initializerAssertionsFromBody(record.body)}
+        super();""")}
 
 ${maybeGenerate(
     annotation.deriveRuntimeType,

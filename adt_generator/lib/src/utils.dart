@@ -41,8 +41,13 @@ String bodyToFields(Map<Symbol, TypeD> body) => body.entries
     .map((e) => '''final ${e.value.toCode()} ${e.key.toCode()};''')
     .join('\n');
 
-String initializerArgsFromSymbols(Iterable<Symbol> body) =>
-    body.map((e) => 'this.${e.toCode()}').join(', ');
+String initializerArgsFromSymbols(
+  Iterable<Symbol> body, {
+  bool required = false,
+}) =>
+    body
+        .map((e) => '${required ? "required " : ""}this.${e.toCode()}')
+        .join(', ');
 
 String initializerAssertionsFromBody(Map<Symbol, TypeD> body) {
   final r = body.entries
