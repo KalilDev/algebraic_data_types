@@ -233,13 +233,13 @@ String toJsonSignatureToCode() =>
     functionSignatureToCode(TypeD.object, "toJson", {});
 
 String toJsonObjectToCode(
-  Iterable<Symbol> body, [
+  Map<Symbol, TypeD> body, [
   String? additionalExpression,
 ]) =>
     """
 ${toJsonSignatureToCode()} => {
   ${additionalExpression == null ? '' : '${additionalExpression},'}
-  ${body.map((e) => '${e.toCode()}: ${e.toCode()}').join(',')}
+  ${body.entries.map((e) => '${e.key.toCode()}: ${_singleObjectToJsonToCode(e.key.toCode(), e.value)}').join(',')}
 };
 """;
 String fromJsonObjectBody(
@@ -249,7 +249,7 @@ String fromJsonObjectBody(
 ) =>
     """
   $constructorName(
-    ${body.entries.map((e) => '${namedParameters ? "${e.key.toCode()}: " : ""}(json as Map<String, Object?>)[r"${e.key.toCode()}"] as ${e.value.toCode()}').join(",")}
+    ${body.entries.map((e) => '${namedParameters ? "${e.key.toCode()}: " : ""}${_singleObjectFromJsonToCode('(json as Map<String, Object?>)[r"${e.key.toCode()}"]', e.value)}').join(",")}
   )
 """;
 
@@ -263,21 +263,35 @@ extension on Iterable<T> {
   }
 }
 
+String _singleObjectFromJsonToCode(String expr, TypeD type) {
+  if (type.fromJson == null) {
+    return "$expr as ${type.toCode()}";
+  }
+  return "${type.fromJson}".replaceAll("{}", expr);
+}
+
+String _singleObjectToJsonToCode(String expr, TypeD type) {
+  if (type.toJson == null) {
+    return expr;
+  }
+  return "${type.toJson}".replaceAll("{}", expr);
+}
+
 String fromJsonListBody(
   Symbol className,
   List<TypeD> body,
 ) =>
     """
   ${className.toCode()}(
-    ${body.mapIndexed((e, i) => "(json as List<Object?>)[$i] as ${e.toCode()}").join(",")}
+    ${body.mapIndexed((e, i) => _singleObjectFromJsonToCode("(json as List<Object?>)[$i]", e)).join(",")}
   )
 """;
 
 String toJsonListToCode(
-  Iterable<Symbol> body,
+  Map<Symbol, TypeD> body,
 ) =>
     """
 ${toJsonSignatureToCode()} => [
-  ${body.map((e) => e.toCode()).join(',')}
+  ${body.entries.map((e) => _singleObjectToJsonToCode(e.key.toCode(), e.value)).join(',')}
 ];
 """;

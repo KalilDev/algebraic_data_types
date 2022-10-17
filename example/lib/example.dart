@@ -7,7 +7,8 @@ part 'example.g.dart';
 bool defaultEquality(Object? a, Object? b) => a == b;
 
 Object? defaultHash(Object? a) => a.hashCode;
-
+T identityToJson<T>(T object) => object;
+T identityFromJson<T>(Object? object) => object as T;
 @data(
   #Tree,
   [Tp(#t)],
@@ -78,6 +79,8 @@ const Type _NullableEx = NullableEx;
       namespace: #intns,
       hash: "defaultHash({})",
       equality: "defaultEquality({a}, {b})",
+      toJson: "identityToJson<intns.Int>({})",
+      fromJson: "identityFromJson<intns.Int>({})",
     )
   ]),
   deriveFromJson: true,
@@ -89,7 +92,12 @@ const Type _boardIndex = BoardIndex;
   #$Foo$,
   [],
   Record({
-    #bar: T(#Int, namespace: #intns),
+    #bar: T(
+      #Int,
+      namespace: #intns,
+      toJson: "identityToJson<intns.Int>({})",
+      fromJson: "identityFromJson<intns.Int>({})",
+    ),
     #baz$: T(#Int, namespace: #intns),
     #$qux$: T(#Int, namespace: #intns),
     #$quox$: T(#$Foo$),

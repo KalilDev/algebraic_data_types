@@ -14,14 +14,14 @@ packages:
       name: adt_annotation_base
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   adt_generator:
     dependency: "direct dev"
     description:
       path: "../adt_generator"
       relative: true
     source: path
-    version: "3.0.7"
+    version: "3.0.9"
   analyzer:
     dependency: transitive
     description:
@@ -217,7 +217,7 @@ packages:
       name: kalil_adt_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.9"
+    version: "3.0.10"
   kalil_utils:
     dependency: transitive
     description:

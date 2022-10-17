@@ -290,7 +290,7 @@ ${bodyToFields(data.body)}
 
   ${maybeGenerate(
     union.annotation.deriveToJson,
-    () => toJsonObjectToCode(data.body.keys, "\$type: \$type.name"),
+    () => toJsonObjectToCode(data.body, "\$type: \$type.name"),
   )}
 
   ${union.visitName != '' ? visitImplementation(union.visitName, union, data) : ''}

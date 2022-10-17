@@ -288,7 +288,7 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
 
   factory BoardIndex.fromJson(Object json) => BoardIndex(
       (json as List<Object?>)[0] as intns.Int,
-      (json as List<Object?>)[1] as intns.Int);
+      identityFromJson<intns.Int>((json as List<Object?>)[1]));
 
   factory BoardIndex.fromTupleN(TupleN2<intns.Int, intns.Int> tpl) =>
       BoardIndex(tpl.e0, tpl.e1);
@@ -311,7 +311,7 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
           Maybe<intns.Int> e1 = const Maybe.none()}) =>
       BoardIndex(e0.valueOr(this.e0), e1.valueOr(this.e1));
 
-  Object toJson() => [e0, e1];
+  Object toJson() => [e0, identityToJson<intns.Int>(e1)];
 }
 
 class $Foo$ {
@@ -330,7 +330,7 @@ class $Foo$ {
       : super();
 
   factory $Foo$.fromJson(Object json) => $Foo$(
-      (json as Map<String, Object?>)[r"bar"] as intns.Int,
+      identityFromJson<intns.Int>((json as Map<String, Object?>)[r"bar"]),
       (json as Map<String, Object?>)[r"baz$"] as intns.Int,
       (json as Map<String, Object?>)[r"$qux$"] as intns.Int,
       (json as Map<String, Object?>)[r"$quox$"] as $Foo$);
@@ -358,7 +358,12 @@ class $Foo$ {
       $Foo$(bar.valueOr(this.bar), baz$.valueOr(this.baz$),
           $qux$.valueOr(this.$qux$), $quox$.valueOr(this.$quox$));
 
-  Object toJson() => {bar: bar, baz$: baz$, $qux$: $qux$, $quox$: $quox$};
+  Object toJson() => {
+        bar: identityToJson<intns.Int>(bar),
+        baz$: baz$,
+        $qux$: $qux$,
+        $quox$: $quox$
+      };
 }
 
 class IntList implements ProductType {

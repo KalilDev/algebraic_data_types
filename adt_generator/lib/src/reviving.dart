@@ -29,6 +29,11 @@ TypeD typeDFromReader(ConstantReader reader) {
       : reader.read('equality').stringValue;
   final hash =
       reader.read('hash').isNull ? null : reader.read('hash').stringValue;
+  final fromJson = reader.read('fromJson').isNull
+      ? null
+      : reader.read('fromJson').stringValue;
+  final toJson =
+      reader.read('toJson').isNull ? null : reader.read('toJson').stringValue;
   if (reader.read('nullable').boolValue) {
     return TypeD.n(
       name,
@@ -37,6 +42,8 @@ TypeD typeDFromReader(ConstantReader reader) {
       namespace: namespace,
       equality: equality,
       hash: hash,
+      fromJson: fromJson,
+      toJson: toJson,
     );
   }
   return TypeD(
@@ -46,6 +53,8 @@ TypeD typeDFromReader(ConstantReader reader) {
     namespace: namespace,
     equality: equality,
     hash: hash,
+    fromJson: fromJson,
+    toJson: toJson,
   );
 }
 

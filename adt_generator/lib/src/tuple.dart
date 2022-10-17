@@ -89,7 +89,7 @@ ${maybeGenerate(
 
   ${maybeGenerate(
     annotation.deriveToJson,
-    () => toJsonListToCode(body.keys),
+    () => toJsonListToCode(body),
   )}
 
 }

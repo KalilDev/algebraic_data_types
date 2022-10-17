@@ -16,6 +16,8 @@ class TypeD {
   final bool nullable;
   final String? equality;
   final String? hash;
+  final String? fromJson;
+  final String? toJson;
 
   const TypeD(
     this.name, {
@@ -24,6 +26,8 @@ class TypeD {
     this.namespace,
     this.equality,
     this.hash,
+    this.fromJson,
+    this.toJson,
   })  : nullable = false,
         arguments = args,
         assertions = asserts;
@@ -35,6 +39,8 @@ class TypeD {
     this.namespace,
     this.equality,
     this.hash,
+    this.fromJson,
+    this.toJson,
   })  : nullable = true,
         arguments = args,
         assertions = asserts;

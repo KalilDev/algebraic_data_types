@@ -64,7 +64,7 @@ ${maybeGenerate(
 
   ${maybeGenerate(
     annotation.deriveToJson,
-    () => toJsonObjectToCode(body.keys),
+    () => toJsonObjectToCode(body),
   )}
 }
 ''';
