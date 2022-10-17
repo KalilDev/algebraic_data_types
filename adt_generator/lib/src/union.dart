@@ -83,6 +83,9 @@ ${visitName != '' && union.topLevel ? topLevelVisit(unionData) : ''}
 
 ${visitCName != '' && union.topLevel ? topLevelVisitC(unionData) : ''}
 
+
+${generateUnionCasesEnum(unionData)}
+
 abstract class ${annotation.parameterizedTypeToCode()}
           ${mixinToCode(annotation.mixin)}
           ${maybeGenerate(
@@ -113,6 +116,10 @@ ${maybeGenerate(
   ${maybeGenerate(annotation.deriveToString, () => '''
   String toString() => throw UnimplementedError(
       'Each case has its own implementation of toString');
+  ''')}
+  ${maybeGenerate(unionData.caseDatas.isNotEmpty, () => '''
+  \$${unionData.annotation.name.toCode()}Type get \$type => throw UnimplementedError(
+      'Each case has its own implementation of type\\\$');
   ''')}
 }
 
@@ -205,6 +212,18 @@ class _UnionData {
   );
 }
 
+String generateUnionCasesEnum(_UnionData union) {
+  final name = union.annotation.name.toCode();
+  if (union.caseDatas.isEmpty) {
+    return '';
+  }
+  return '''
+  enum \$${name}Type {
+    ${union.caseDatas.map((e) => e.instantiatedType.name.toCode()).join(', ')}
+  }
+''';
+}
+
 String generateUnionCaseClass(_UnionData union, _CaseData data) {
   final name = data.instantiatedType.name.toCode();
   return '''
@@ -242,6 +261,10 @@ ${bodyToFields(data.body)}
       false,
     ),
   )}
+
+  @override
+  final \$${union.annotation.name.toCode()}Type \$type =
+    \$${union.annotation.name.toCode()}Type.$name;
 
   ${union.visitName != '' ? visitImplementation(union.visitName, union, data) : ''}
 

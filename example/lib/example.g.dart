@@ -12,6 +12,8 @@ R visitTree<R extends Object?, t extends Object?>(
         R Function() nil) =>
     union.visit(node: node, nil: nil);
 
+enum $TreeType { Node, Nil }
+
 abstract class Tree<t extends Object?> {
   const Tree._();
   const factory Tree.node(t value, Tree<t> left, Tree<t> right) = Node;
@@ -20,6 +22,9 @@ abstract class Tree<t extends Object?> {
   R visit<R extends Object?>(
       {required R Function(t value, Tree<t> left, Tree<t> right) node,
       required R Function() nil});
+
+  $TreeType get $type => throw UnimplementedError(
+      'Each case has its own implementation of type\$');
 }
 
 class Node<t extends Object?> extends Tree<t> {
@@ -44,6 +49,9 @@ class Node<t extends Object?> extends Tree<t> {
           right.valueOr(this.right));
 
   @override
+  final $TreeType $type = $TreeType.Node;
+
+  @override
   R visit<R extends Object?>(
           {required R Function(t value, Tree<t> left, Tree<t> right) node,
           required R Function() nil}) =>
@@ -52,6 +60,9 @@ class Node<t extends Object?> extends Tree<t> {
 
 class Nil<t extends Object?> extends Tree<t> {
   const Nil() : super._();
+
+  @override
+  final $TreeType $type = $TreeType.Nil;
 
   @override
   R visit<R extends Object?>(
