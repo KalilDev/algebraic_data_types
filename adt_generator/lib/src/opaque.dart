@@ -41,11 +41,11 @@ ${maybeGenerate(
   @override
   int get hashCode => ${hashExpressionFromTypeAndBody(
       annotation.instantiationToType(),
-      body.keys,
+      body,
     )};
   @override
   bool operator ==(other) =>
-        ${equalityExpressionFor(annotation.instantiationToCode(), body.keys)};
+        ${equalityExpressionFor(annotation.instantiationToCode(), body)};
   ''',
   )}
   ${maybeGenerate(

@@ -60,16 +60,26 @@ String initializerAssertionsFromBody(Map<Symbol, TypeD> body) {
 String maybeGenerate(bool condition, String Function() generate) =>
     condition ? generate() : '';
 
+String _hashToCode(MapEntry<Symbol, TypeD> e) {
+  const defaultHash = '{}';
+  final hash = e.value.hash ?? defaultHash;
+  return hash.replaceAll('{}', e.key.toCode());
+}
+
 Iterable<String> hashablePartsFrom(
-        TypeD instantiatedType, Iterable<Symbol> body) =>
+  TypeD instantiatedType,
+  Map<Symbol, TypeD> body,
+) =>
     [
       '(${instantiatedType.name.toCode()})',
       ...instantiatedType.arguments.map((e) => e.toTypeLiteralCode()),
-      ...body.map((e) => e.toCode()),
+      ...body.entries.map(_hashToCode),
     ];
 
 String hashExpressionFromTypeAndBody(
-        TypeD instantiatedType, Iterable<Symbol> body) =>
+  TypeD instantiatedType,
+  Map<Symbol, TypeD> body,
+) =>
     hashExpressionFromHashable(hashablePartsFrom(instantiatedType, body));
 String hashExpressionFromHashable(Iterable<String> hashable) {
   if (hashable.length == 1) {
@@ -82,17 +92,25 @@ String hashExpressionFromHashable(Iterable<String> hashable) {
   return 'Object.hashAll([${hashable.join(', ')}])';
 }
 
-String _specificEqualityExpressionFor(String type, Iterable<Symbol> body) {
+String _equalityToCode(MapEntry<Symbol, TypeD> e) {
+  const defaultEquality = '{a} == {b}';
+  final equality = e.value.equality ?? defaultEquality;
+  return equality
+      .replaceAll('{a}', 'this.${e.key.toCode()}')
+      .replaceAll('{b}', 'other.${e.key.toCode()}');
+}
+
+String _specificEqualityExpressionFor(String type, Map<Symbol, TypeD> body) {
   return '(' +
       'other is $type &&\n' +
       [
         'true',
-        ...body.map((e) => 'this.${e.toCode()} == other.${e.toCode()}'),
+        ...body.entries.map(_equalityToCode),
       ].join(' &&\n') +
       ')';
 }
 
-String equalityExpressionFor(String type, Iterable<Symbol> body) {
+String equalityExpressionFor(String type, Map<Symbol, TypeD> body) {
   return 'identical(this, other) || ${_specificEqualityExpressionFor(type, body)}';
 }
 

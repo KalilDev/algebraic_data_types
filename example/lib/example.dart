@@ -4,6 +4,10 @@ import 'int.dart' as intns;
 /// example.dart
 part 'example.g.dart';
 
+bool defaultEquality(Object? a, Object? b) => a == b;
+
+Object? defaultHash(Object? a) => a.hashCode;
+
 @data(
   #Tree,
   [Tp(#t)],
@@ -50,7 +54,15 @@ const Type _NullableEx = NullableEx;
 @data(
   #BoardIndex,
   [],
-  Tuple([T(#Int, namespace: #intns), T(#Int, namespace: #intns)]),
+  Tuple([
+    T(#Int, namespace: #intns),
+    T(
+      #Int,
+      namespace: #intns,
+      hash: "defaultHash({})",
+      equality: "defaultEquality({a}, {b})",
+    )
+  ]),
   deriveRuntimeType: false,
 )
 const Type _boardIndex = BoardIndex;

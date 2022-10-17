@@ -12,8 +12,6 @@ String generateForRecord(
   final name = annotation.name;
   final productTypes = record.body.values.map((e) => e.toTypeLiteralCode());
 
-  // TODO: record.deriveMode
-
   return '''
 class ${annotation.parameterizedTypeToCode()}
           ${mixinToCode(annotation.mixin)}
@@ -49,11 +47,11 @@ ${maybeGenerate(
   @override
   int get hashCode => ${hashExpressionFromTypeAndBody(
       annotation.instantiationToType(),
-      record.body.keys,
+      record.body,
     )};
   @override
   bool operator ==(other) =>
-        ${equalityExpressionFor(annotation.instantiationToCode(), record.body.keys)};
+        ${equalityExpressionFor(annotation.instantiationToCode(), record.body)};
   ''',
   )}
   ${maybeGenerate(

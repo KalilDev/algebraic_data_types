@@ -14,12 +14,16 @@ class TypeD {
   final List<String> assertions;
   final Symbol? namespace;
   final bool nullable;
+  final String? equality;
+  final String? hash;
 
   const TypeD(
     this.name, {
     List<TypeD> args = const [],
     List<String> asserts = const [],
     this.namespace,
+    this.equality,
+    this.hash,
   })  : nullable = false,
         arguments = args,
         assertions = asserts;
@@ -29,6 +33,8 @@ class TypeD {
     List<TypeD> args = const [],
     List<String> asserts = const [],
     this.namespace,
+    this.equality,
+    this.hash,
   })  : nullable = true,
         arguments = args,
         assertions = asserts;

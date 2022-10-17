@@ -138,7 +138,7 @@ class _CaseData {
 }
 
 String hashExpressionForCase(_CaseData data) =>
-    hashExpressionFromTypeAndBody(data.instantiatedType, data.body.keys);
+    hashExpressionFromTypeAndBody(data.instantiatedType, data.body);
 
 String visitImplementation(
   String visitName,
@@ -224,7 +224,7 @@ ${bodyToFields(data.body)}
   int get hashCode => ${hashExpressionForCase(data)};
   @override
   bool operator ==(other) =>
-        ${equalityExpressionFor(data.instantiatedType.toCode(), data.body.keys)};
+        ${equalityExpressionFor(data.instantiatedType.toCode(), data.body)};
   ''')}
   ${maybeGenerate(
     union.annotation.deriveToString,

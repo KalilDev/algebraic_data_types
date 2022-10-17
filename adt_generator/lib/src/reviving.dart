@@ -24,12 +24,19 @@ TypeD typeDFromReader(ConstantReader reader) {
   final namespace = reader.read('namespace').isNull
       ? null
       : reader.read('namespace').symbolValue;
+  final equality = reader.read('equality').isNull
+      ? null
+      : reader.read('equality').stringValue;
+  final hash =
+      reader.read('hash').isNull ? null : reader.read('hash').stringValue;
   if (reader.read('nullable').boolValue) {
     return TypeD.n(
       name,
       args: arguments,
       asserts: assertions,
       namespace: namespace,
+      equality: equality,
+      hash: hash,
     );
   }
   return TypeD(
@@ -37,6 +44,8 @@ TypeD typeDFromReader(ConstantReader reader) {
     args: arguments,
     asserts: assertions,
     namespace: namespace,
+    equality: equality,
+    hash: hash,
   );
 }
 

@@ -137,14 +137,14 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
       BoardIndex(tpl.e0, tpl.e1);
 
   @override
-  int get hashCode => Object.hash((BoardIndex), e0, e1);
+  int get hashCode => Object.hash((BoardIndex), e0, defaultHash(e1));
   @override
   bool operator ==(other) =>
       identical(this, other) ||
       (other is BoardIndex &&
           true &&
           this.e0 == other.e0 &&
-          this.e1 == other.e1);
+          defaultEquality(this.e1, other.e1));
 
   @override
   String toString() => "BoardIndex ($e0, $e1)";
