@@ -37,9 +37,9 @@ class Node<t extends Object?> extends Tree<t> {
         super._();
 
   Node<t> copyWith(
-          {required Maybe<t> value,
-          required Maybe<Tree<t>> left,
-          required Maybe<Tree<t>> right}) =>
+          {Maybe<t> value = const Maybe.none(),
+          Maybe<Tree<t>> left = const Maybe.none(),
+          Maybe<Tree<t>> right = const Maybe.none()}) =>
       Node<t>(value.valueOr(this.value), left.valueOr(this.left),
           right.valueOr(this.right));
 
@@ -94,9 +94,9 @@ class RecordEx<Message extends Object?> implements ProductType {
       "RecordEx<$Message> { $message, $other_message, $number }";
 
   RecordEx<Message> copyWith(
-          {required Maybe<Message> message,
-          required Maybe<Message> other_message,
-          required Maybe<intns.Int> number}) =>
+          {Maybe<Message> message = const Maybe.none(),
+          Maybe<Message> other_message = const Maybe.none(),
+          Maybe<intns.Int> number = const Maybe.none()}) =>
       RecordEx<Message>(
           message.valueOr(this.message),
           other_message.valueOr(this.other_message),
@@ -123,7 +123,7 @@ class NullableEx implements ProductType {
   @override
   String toString() => "NullableEx { $nullable }";
 
-  NullableEx copyWith({required Maybe<String?> nullable}) =>
+  NullableEx copyWith({Maybe<String?> nullable = const Maybe.none()}) =>
       NullableEx(nullable.valueOr(this.nullable));
 }
 
@@ -150,7 +150,8 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
   String toString() => "BoardIndex ($e0, $e1)";
 
   BoardIndex copyWith(
-          {required Maybe<intns.Int> e0, required Maybe<intns.Int> e1}) =>
+          {Maybe<intns.Int> e0 = const Maybe.none(),
+          Maybe<intns.Int> e1 = const Maybe.none()}) =>
       BoardIndex(e0.valueOr(this.e0), e1.valueOr(this.e1));
 }
 
@@ -185,10 +186,10 @@ class $Foo$ {
   String toString() => "\$Foo\$ { $bar, ${baz$}, ${$qux$}, ${$quox$} }";
 
   $Foo$ copyWith(
-          {required Maybe<intns.Int> bar,
-          required Maybe<intns.Int> baz$,
-          required Maybe<intns.Int> $qux$,
-          required Maybe<$Foo$> $quox$}) =>
+          {Maybe<intns.Int> bar = const Maybe.none(),
+          Maybe<intns.Int> baz$ = const Maybe.none(),
+          Maybe<intns.Int> $qux$ = const Maybe.none(),
+          Maybe<$Foo$> $quox$ = const Maybe.none()}) =>
       $Foo$(bar.valueOr(this.bar), baz$.valueOr(this.baz$),
           $qux$.valueOr(this.$qux$), $quox$.valueOr(this.$quox$));
 }

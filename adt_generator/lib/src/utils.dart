@@ -190,14 +190,15 @@ String toStringBodyFrom(
             '${elements.map((e) => _stringWithLeading$OrWrapped(e.toCode())).join(', ')}'
             '$delimiterR';
 
-String copyWithSignatureToCode(TypeD classType, Map<Symbol, TypeD> elements) =>
-    functionSignatureToCode(
-      classType,
-      "copyWith",
-      {},
-      requiredNamedArguments:
-          elements.map((key, value) => MapEntry(key, T(#Maybe, args: [value]))),
-    );
+String copyWithSignatureToCode(TypeD classType, Map<Symbol, TypeD> elements) {
+  final namedArgs =
+      elements.map((key, value) => MapEntry(key, T(#Maybe, args: [value])));
+  return '${classType.toCode()} '
+      'copyWith'
+      '('
+      '${emptyOrSurrounded(namedArgs.entries.map(argumentFromEntryToCode).map((e) => "$e = const Maybe.none()"), '{,}')}'
+      ')';
+}
 
 String copyWithToCode(TypeD classType, Map<Symbol, TypeD> elements,
         bool positionalArguments) =>
