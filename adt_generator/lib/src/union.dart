@@ -94,6 +94,18 @@ abstract class ${annotation.parameterizedTypeToCode()}
   )} {
   const ${name.toCode()}._();
 ${caseFactories.join('\n')}
+  ${maybeGenerate(
+    annotation.deriveFromJson && unionData.caseDatas.isNotEmpty,
+    () => """
+    factory ${name.toCode()}.fromJson(Object json) {
+      switch ((json as Map<String, Object?>)["\\\$type"]) {
+        ${unionData.caseDatas.map((e) => '''
+            case (r"${e.instantiatedType.name.toCode()}"): return ${e.instantiatedType.name.toCode()}.fromJson(json);
+        ''').join('\n')}
+        default: throw UnimplementedError("Invalid type");
+      }
+    }""",
+  )}
 
 ${maybeGenerate(
     annotation.deriveRuntimeType,
@@ -120,6 +132,10 @@ ${maybeGenerate(
   ${maybeGenerate(unionData.caseDatas.isNotEmpty, () => '''
   \$${unionData.annotation.name.toCode()}Type get \$type => throw UnimplementedError(
       'Each case has its own implementation of type\\\$');
+  ''')}
+  ${maybeGenerate(annotation.deriveToJson, () => '''
+  ${toJsonSignatureToCode()} => throw UnimplementedError(
+      'Each case has its own implementation of toJson');
   ''')}
 }
 
@@ -238,6 +254,12 @@ ${bodyToFields(data.body)}
       : ${initializerAssertionsFromBody(data.body)}
         super._();""")}
         
+  ${maybeGenerate(
+    union.annotation.deriveFromJson,
+    () => """
+    factory $name.fromJson(Object json) => ${fromJsonObjectBody(name, data.body, false)};""",
+  )}
+
   ${maybeGenerate(union.annotation.deriveEquality, () => '''
   @override
   int get hashCode => ${hashExpressionForCase(data)};
@@ -265,6 +287,11 @@ ${bodyToFields(data.body)}
   @override
   final \$${union.annotation.name.toCode()}Type \$type =
     \$${union.annotation.name.toCode()}Type.$name;
+
+  ${maybeGenerate(
+    union.annotation.deriveToJson,
+    () => toJsonObjectToCode(data.body.keys, "\$type: \$type.name"),
+  )}
 
   ${union.visitName != '' ? visitImplementation(union.visitName, union, data) : ''}
 

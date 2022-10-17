@@ -74,6 +74,8 @@ class DataAnnotation {
   final bool deriveRuntimeType;
   final bool deriveToString;
   final bool deriveCopyWith;
+  final bool deriveToJson;
+  final bool deriveFromJson;
 
   const DataAnnotation(
     this.name,
@@ -84,7 +86,10 @@ class DataAnnotation {
     this.deriveRuntimeType = true,
     this.deriveToString = true,
     this.deriveCopyWith = true,
-  });
+    this.deriveToJson = true,
+    this.deriveFromJson = false,
+  }) : assert(typeParams.length != 0 && !deriveFromJson ||
+            typeParams.length == 0);
 }
 
 /// The configuration for generating the visit function(s) for an [Union].

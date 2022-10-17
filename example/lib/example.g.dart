@@ -25,6 +25,9 @@ abstract class Tree<t extends Object?> {
 
   $TreeType get $type => throw UnimplementedError(
       'Each case has its own implementation of type\$');
+
+  Object toJson() => throw UnimplementedError(
+      'Each case has its own implementation of toJson');
 }
 
 class Node<t extends Object?> extends Tree<t> {
@@ -51,6 +54,9 @@ class Node<t extends Object?> extends Tree<t> {
   @override
   final $TreeType $type = $TreeType.Node;
 
+  Object toJson() =>
+      {$type: $type.name, value: value, left: left, right: right};
+
   @override
   R visit<R extends Object?>(
           {required R Function(t value, Tree<t> left, Tree<t> right) node,
@@ -64,11 +70,142 @@ class Nil<t extends Object?> extends Tree<t> {
   @override
   final $TreeType $type = $TreeType.Nil;
 
+  Object toJson() => {
+        $type: $type.name,
+      };
+
   @override
   R visit<R extends Object?>(
           {required R Function(t value, Tree<t> left, Tree<t> right) node,
           required R Function() nil}) =>
       nil();
+}
+
+enum $IntTreeType { IntNode, IntNil }
+
+abstract class IntTree implements SumType {
+  const IntTree._();
+  const factory IntTree.intNode(intns.Int value, IntTree left, IntTree right) =
+      IntNode;
+  const factory IntTree.intNil() = IntNil;
+  factory IntTree.fromJson(Object json) {
+    switch ((json as Map<String, Object?>)["\$type"]) {
+      case (r"IntNode"):
+        return IntNode.fromJson(json);
+
+      case (r"IntNil"):
+        return IntNil.fromJson(json);
+
+      default:
+        throw UnimplementedError("Invalid type");
+    }
+  }
+
+  @override
+  SumRuntimeType get runtimeType => SumRuntimeType([IntNode, IntNil]);
+
+  R visit<R extends Object?>(
+      {required R Function(intns.Int value, IntTree left, IntTree right)
+          intNode,
+      required R Function() intNil});
+
+  @override
+  int get hashCode => throw UnimplementedError(
+      'Each case has its own implementation of hashCode');
+  bool operator ==(other) =>
+      throw UnimplementedError('Each case has its own implementation of ==');
+
+  String toString() => throw UnimplementedError(
+      'Each case has its own implementation of toString');
+
+  $IntTreeType get $type => throw UnimplementedError(
+      'Each case has its own implementation of type\$');
+
+  Object toJson() => throw UnimplementedError(
+      'Each case has its own implementation of toJson');
+}
+
+class IntNode extends IntTree {
+  final intns.Int value;
+  final IntTree left;
+  final IntTree right;
+
+  const IntNode(this.value, this.left, this.right)
+      : assert(value != null),
+        super._();
+
+  const IntNode.named(
+      {required this.value, required this.left, required this.right})
+      : assert(value != null),
+        super._();
+
+  factory IntNode.fromJson(Object json) => IntNode(
+      (json as Map<String, Object?>)[r"value"] as intns.Int,
+      (json as Map<String, Object?>)[r"left"] as IntTree,
+      (json as Map<String, Object?>)[r"right"] as IntTree);
+
+  @override
+  int get hashCode => Object.hash((IntNode), value, left, right);
+  @override
+  bool operator ==(other) =>
+      identical(this, other) ||
+      (other is IntNode &&
+          true &&
+          this.value == other.value &&
+          this.left == other.left &&
+          this.right == other.right);
+
+  @override
+  String toString() => "IntNode { $value, $left, $right }";
+
+  IntNode copyWith(
+          {Maybe<intns.Int> value = const Maybe.none(),
+          Maybe<IntTree> left = const Maybe.none(),
+          Maybe<IntTree> right = const Maybe.none()}) =>
+      IntNode(value.valueOr(this.value), left.valueOr(this.left),
+          right.valueOr(this.right));
+
+  @override
+  final $IntTreeType $type = $IntTreeType.IntNode;
+
+  Object toJson() =>
+      {$type: $type.name, value: value, left: left, right: right};
+
+  @override
+  R visit<R extends Object?>(
+          {required R Function(intns.Int value, IntTree left, IntTree right)
+              intNode,
+          required R Function() intNil}) =>
+      intNode(this.value, this.left, this.right);
+}
+
+class IntNil extends IntTree {
+  const IntNil() : super._();
+
+  factory IntNil.fromJson(Object json) => IntNil();
+
+  @override
+  int get hashCode => (IntNil).hashCode;
+  @override
+  bool operator ==(other) =>
+      identical(this, other) || (other is IntNil && true);
+
+  @override
+  String toString() => "IntNil";
+
+  @override
+  final $IntTreeType $type = $IntTreeType.IntNil;
+
+  Object toJson() => {
+        $type: $type.name,
+      };
+
+  @override
+  R visit<R extends Object?>(
+          {required R Function(intns.Int value, IntTree left, IntTree right)
+              intNode,
+          required R Function() intNil}) =>
+      intNil();
 }
 
 class RecordEx<Message extends Object?> implements ProductType {
@@ -112,6 +249,9 @@ class RecordEx<Message extends Object?> implements ProductType {
           message.valueOr(this.message),
           other_message.valueOr(this.other_message),
           number.valueOr(this.number));
+
+  Object toJson() =>
+      {message: message, other_message: other_message, number: number};
 }
 
 class NullableEx implements ProductType {
@@ -136,6 +276,8 @@ class NullableEx implements ProductType {
 
   NullableEx copyWith({Maybe<String?> nullable = const Maybe.none()}) =>
       NullableEx(nullable.valueOr(this.nullable));
+
+  Object toJson() => {nullable: nullable};
 }
 
 class BoardIndex implements TupleN2<intns.Int, intns.Int> {
@@ -143,6 +285,10 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
   final intns.Int e1;
 
   const BoardIndex(this.e0, this.e1) : super();
+
+  factory BoardIndex.fromJson(Object json) => BoardIndex(
+      (json as List<Object?>)[0] as intns.Int,
+      (json as List<Object?>)[1] as intns.Int);
 
   factory BoardIndex.fromTupleN(TupleN2<intns.Int, intns.Int> tpl) =>
       BoardIndex(tpl.e0, tpl.e1);
@@ -164,6 +310,8 @@ class BoardIndex implements TupleN2<intns.Int, intns.Int> {
           {Maybe<intns.Int> e0 = const Maybe.none(),
           Maybe<intns.Int> e1 = const Maybe.none()}) =>
       BoardIndex(e0.valueOr(this.e0), e1.valueOr(this.e1));
+
+  Object toJson() => [e0, e1];
 }
 
 class $Foo$ {
@@ -180,6 +328,12 @@ class $Foo$ {
       required this.$qux$,
       required this.$quox$})
       : super();
+
+  factory $Foo$.fromJson(Object json) => $Foo$(
+      (json as Map<String, Object?>)[r"bar"] as intns.Int,
+      (json as Map<String, Object?>)[r"baz$"] as intns.Int,
+      (json as Map<String, Object?>)[r"$qux$"] as intns.Int,
+      (json as Map<String, Object?>)[r"$quox$"] as $Foo$);
 
   @override
   int get hashCode => Object.hash(($Foo$), bar, baz$, $qux$, $quox$);
@@ -203,6 +357,8 @@ class $Foo$ {
           Maybe<$Foo$> $quox$ = const Maybe.none()}) =>
       $Foo$(bar.valueOr(this.bar), baz$.valueOr(this.baz$),
           $qux$.valueOr(this.$qux$), $quox$.valueOr(this.$quox$));
+
+  Object toJson() => {bar: bar, baz$: baz$, $qux$: $qux$, $quox$: $quox$};
 }
 
 class IntList implements ProductType {
@@ -222,4 +378,6 @@ class IntList implements ProductType {
 
   @override
   String toString() => "IntList { $_unwrap }";
+
+  Object toJson() => {_unwrap: _unwrap};
 }

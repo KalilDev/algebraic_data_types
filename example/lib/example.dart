@@ -30,6 +30,23 @@ Object? defaultHash(Object? a) => a.hashCode;
 const Type _tree = Tree;
 
 @data(
+  #IntTree,
+  [],
+  Union(
+    {
+      #IntNode: {
+        #value: T(#Int, asserts: ['{} != null'], namespace: #intns),
+        #left: T(#IntTree),
+        #right: T(#IntTree),
+      },
+      #IntNil: {},
+    },
+  ),
+  deriveFromJson: true,
+)
+const Type _intTree = IntTree;
+
+@data(
   #RecordEx,
   [Tp(#Message)],
   Record({
@@ -63,6 +80,7 @@ const Type _NullableEx = NullableEx;
       equality: "defaultEquality({a}, {b})",
     )
   ]),
+  deriveFromJson: true,
   deriveRuntimeType: false,
 )
 const Type _boardIndex = BoardIndex;
@@ -77,6 +95,7 @@ const Type _boardIndex = BoardIndex;
     #$quox$: T(#$Foo$),
   }),
   deriveRuntimeType: false,
+  deriveFromJson: true,
 )
 const Type _$foo$ = $Foo$;
 

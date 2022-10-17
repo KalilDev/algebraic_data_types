@@ -27,6 +27,12 @@ ${bodyToFields(body)}
 
   const ${name.toCode()}$constructorName(${initializerArgsFromSymbols(body.keys)});
 
+  ${maybeGenerate(
+    annotation.deriveFromJson,
+    () => """
+    factory ${name.toCode()}.fromJson(Object json) => ${fromJsonObjectBody('${name.toCode()}$constructorName', body, false)};""",
+  )}
+
 ${maybeGenerate(
     annotation.deriveRuntimeType,
     () => '''
@@ -54,6 +60,11 @@ ${maybeGenerate(
       annotation.instantiationToType(),
       toStringRecordBodyFrom(body.keys),
     ),
+  )}
+
+  ${maybeGenerate(
+    annotation.deriveToJson,
+    () => toJsonObjectToCode(body.keys),
   )}
 }
 ''';

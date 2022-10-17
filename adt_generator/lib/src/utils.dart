@@ -228,3 +228,56 @@ String copyWithToCode(TypeD classType, Map<Symbol, TypeD> elements,
 
 String mixinToCode(List<TypeD> mixins) =>
     mixins.isEmpty ? '' : 'with ${mixins.map((e) => e.toCode()).join(',')}';
+
+String toJsonSignatureToCode() =>
+    functionSignatureToCode(TypeD.object, "toJson", {});
+
+String toJsonObjectToCode(
+  Iterable<Symbol> body, [
+  String? additionalExpression,
+]) =>
+    """
+${toJsonSignatureToCode()} => {
+  ${additionalExpression == null ? '' : '${additionalExpression},'}
+  ${body.map((e) => '${e.toCode()}: ${e.toCode()}').join(',')}
+};
+""";
+String fromJsonObjectBody(
+  String constructorName,
+  Map<Symbol, TypeD> body,
+  bool namedParameters,
+) =>
+    """
+  $constructorName(
+    ${body.entries.map((e) => '${namedParameters ? "${e.key.toCode()}: " : ""}(json as Map<String, Object?>)[r"${e.key.toCode()}"] as ${e.value.toCode()}').join(",")}
+  )
+""";
+
+extension on Iterable<T> {
+  Iterable<R> mapIndexed<R>(R Function(T, int) fn) sync* {
+    var i = 0;
+    for (final e in this) {
+      yield fn(e, i);
+      i++;
+    }
+  }
+}
+
+String fromJsonListBody(
+  Symbol className,
+  List<TypeD> body,
+) =>
+    """
+  ${className.toCode()}(
+    ${body.mapIndexed((e, i) => "(json as List<Object?>)[$i] as ${e.toCode()}").join(",")}
+  )
+""";
+
+String toJsonListToCode(
+  Iterable<Symbol> body,
+) =>
+    """
+${toJsonSignatureToCode()} => [
+  ${body.map((e) => e.toCode()).join(',')}
+];
+""";

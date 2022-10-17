@@ -33,6 +33,12 @@ ${bodyToFields(record.body)}
       : ${initializerAssertionsFromBody(record.body)}
         super();""")}
 
+  ${maybeGenerate(
+    annotation.deriveFromJson,
+    () => """
+    factory ${name.toCode()}.fromJson(Object json) => ${fromJsonObjectBody(name.toCode(), record.body, record.deriveMode == RecordConstructorDeriveMode.namedArguments)};""",
+  )}
+
 ${maybeGenerate(
     annotation.deriveRuntimeType,
     () => '''
@@ -69,6 +75,11 @@ ${maybeGenerate(
       record.body,
       record.deriveMode == RecordConstructorDeriveMode.namedArguments,
     ),
+  )}
+
+  ${maybeGenerate(
+    annotation.deriveToJson,
+    () => toJsonObjectToCode(record.body.keys),
   )}
 
 }
